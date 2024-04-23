@@ -14,7 +14,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
   const [isEditing, setIsEditing] = useState(false);
   // 수정할 내용을 저장하는 상태를 정의합니다.
   const [editText, setEditText] = useState(todo.text);
-
+  const [editDate, setEditDate] = useState(todo.date);
   // 수정 모드를 활성화하는 함수를 정의합니다.
   const activateEditMode = () => {
     setIsEditing(true);
@@ -23,6 +23,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
   // 수정 모드를 비활성화하고 변경된 내용을 저장하는 함수를 정의합니다.
   const handleSave = () => {
     onEdit(editText);
+    onEdit(editDate);
     setIsEditing(false);
   };
 
@@ -48,16 +49,34 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
           onBlur={handleSave}
           autoFocus
         />
+        <input
+          className="p-1 mr-3 flex-grow border-2 border-gray-300 rounded-md"
+          type="date"
+          value={editDate}
+          onChange={(e) => setEditDate(e.target.value)}
+          onBlur={handleSave}
+          autoFocus
+        />
         <Button className="btn mr-12" onClick={handleSave}>Edit</Button>
         </div>
       ) : (
-        <span
-          className="ml-5 text-lg flex-grow"
-          style={{ textDecoration: todo.completed ? "line-through" : "none" }}
-          onClick={activateEditMode}
-        >
-          {todo.text}
-        </span>
+        <div>
+          <span
+            className="ml-5 text-lg flex-grow"
+            style={{ textDecoration: todo.completed ? "line-through" : "none" }}
+            onClick={activateEditMode}
+          >
+            {todo.text}
+          </span>
+          <span
+            className="ml-5 text-lg flex-grow"
+            style={{ textDecoration: todo.completed ? "line-through" : "none" }}
+            onClick={activateEditMode}
+          >
+            {todo.date}
+          </span>
+        </div>
+
       )}
 
       {/* 삭제 버튼을 렌더링합니다. */}
