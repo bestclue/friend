@@ -33,6 +33,8 @@ const TodoList = () => {
     setInput("");
   };
 
+
+
   // toggleTodo 함수는 체크박스를 눌러 할 일의 완료 상태를 변경하는 함수입니다.
   const toggleTodo = (id) => {
     // 할 일 목록에서 해당 id를 가진 할 일의 완료 상태를 반전시킵니다.
@@ -66,7 +68,14 @@ const TodoList = () => {
     );
   };
 
+  const deleteAll = () => {
+    console.log("Before deleteAll:", todos); // 삭제 전 상태 출력
+    setTodos([]); // 모든 할 일 목록을 빈 배열로 설정하여 삭제
+    console.log("After deleteAll:", todos); // 삭제 후 상태 출력 (업데이트 후 상태 확인)
+  };
   // 컴포넌트를 렌더링합니다.
+
+
   return (
     <div className="bg-white rounded-lg shadow-md p-4 mt-8 max-w-lg mx-auto">
       <h1 className="text-5xl font-bold text-green-800 shadow-x1 mt-4 mb-8">Todo List</h1>
@@ -82,6 +91,9 @@ const TodoList = () => {
       <Button className="btn" onClick={addTodo}>
         Add Todo
       </Button>
+      <Button className="btn" onClick={deleteAll}>
+  Delete all
+</Button> 
       </div>
       {/* 할 일 목록을 렌더링합니다. */}
       <ul>

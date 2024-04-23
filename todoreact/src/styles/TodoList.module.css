@@ -129,3 +129,12 @@ button.addButton:hover {
 .editButton:hover {
   background-color: #3b4240;
 }
+
+button.delButton {
+  padding: 5px;
+  background-color: #252525;
+  color: rgb(255, 115, 115);
+  border: 1px solid #3b6494;
+  border-radius: 5px;
+  cursor: pointer;
+}
