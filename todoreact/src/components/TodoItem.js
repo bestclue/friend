@@ -22,7 +22,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
 
   // 수정 모드를 비활성화하고 변경된 내용을 저장하는 함수를 정의합니다.
   const handleSave = () => {
-    onEdit(editText);
+    onEdit(editText, editDate);
     setIsEditing(false);
   };
 
@@ -45,16 +45,12 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
           type="text"
           value={editText}
           onChange={(e) => setEditText(e.target.value)}
-          onBlur={handleSave}
-          autoFocus
         />
         <input
           className="p-1 mr-3 flex-grow border-2 border-gray-300 rounded-md"
           type="date"
           value={editDate}
           onChange={(d) => setEditDate(d.target.value)}
-          onBlur={handleSave}
-          autoFocus
         />
         <Button className="btn mr-12" onClick={handleSave}>Edit</Button>
         </>

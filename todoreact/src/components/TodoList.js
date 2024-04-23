@@ -50,10 +50,10 @@ const TodoList = () => {
     );
   };
 
-  const editTodo = (id, newText) => {
+  const editTodo = (id, newText, newDate) => {
     setTodos(
       todos.map((todo) => {
-        return todo.id === id ? { ...todo, text: newText} : todo;
+        return todo.id === id ? { ...todo, text: newText, date: newDate} : todo;
       })
     );
   };
@@ -110,7 +110,7 @@ const TodoList = () => {
             todo={todo}
             onToggle={() => toggleTodo(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
-            onEdit={(newText) => editTodo(todo.id, newTexts)}
+            onEdit={(newText, newDate) => editTodo(todo.id, newText, newDate)}
           />
         ))}
       </ul>
