@@ -23,7 +23,6 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
   // 수정 모드를 비활성화하고 변경된 내용을 저장하는 함수를 정의합니다.
   const handleSave = () => {
     onEdit(editText);
-    onEdit(editDate);
     setIsEditing(false);
   };
 
@@ -40,7 +39,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
       
       {/* 할 일의 텍스트를 렌더링합니다. */}
       {isEditing ? (
-        <div>
+        <>
         <input
           className="p-1 mr-3 flex-grow border-2 border-gray-300 rounded-md"
           type="text"
@@ -53,14 +52,14 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
           className="p-1 mr-3 flex-grow border-2 border-gray-300 rounded-md"
           type="date"
           value={editDate}
-          onChange={(e) => setEditDate(e.target.value)}
+          onChange={(d) => setEditDate(d.target.value)}
           onBlur={handleSave}
           autoFocus
         />
         <Button className="btn mr-12" onClick={handleSave}>Edit</Button>
-        </div>
+        </>
       ) : (
-        <div>
+        <>
           <span
             className="ml-5 text-lg flex-grow"
             style={{ textDecoration: todo.completed ? "line-through" : "none" }}
@@ -75,12 +74,13 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
           >
             {todo.date}
           </span>
-        </div>
+          <Button variant="outline" onClick={onDelete}>Delete</Button>
+        </>
 
       )}
 
       {/* 삭제 버튼을 렌더링합니다. */}
-      <Button variant="outline" onClick={onDelete}>Delete</Button>
+
     </li>
   );
 };

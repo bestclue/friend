@@ -17,6 +17,7 @@ const TodoList = () => {
   // 상태를 관리하는 useState 훅을 사용하여 할 일 목록과 입력값을 초기화합니다.
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
+  const [date, setDate] = useState("");
 
   // addTodo 함수는 입력값을 이용하여 새로운 할 일을 목록에 추가하는 함수입니다.
   const addTodo = () => {
@@ -29,7 +30,7 @@ const TodoList = () => {
     //   completed: 완료 여부,
     // }
     // ...todos => {id: 1, text: "할일1", completed: false}, {id: 2, text: "할일2", completed: false}}, ..
-    setTodos([...todos, { id: Date.now(), text: input, completed: false }]);
+    setTodos([...todos, { id: Date.now(), text: input, date: date, completed: false }]);
     setInput("");
   };
 
@@ -87,6 +88,12 @@ const TodoList = () => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
+      <Input
+        type="date"
+        className="input"
+        value={date}
+        onChange={(d) => setDate(d.target.value)}
+      />
       {/* 할 일을 추가하는 버튼입니다. */}
       <Button className="btn" onClick={addTodo}>
         Add Todo
@@ -103,7 +110,7 @@ const TodoList = () => {
             todo={todo}
             onToggle={() => toggleTodo(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
-            onEdit={(newText) => editTodo(todo.id, newText)}
+            onEdit={(newText) => editTodo(todo.id, newTexts)}
           />
         ))}
       </ul>
