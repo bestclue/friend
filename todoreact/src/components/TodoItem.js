@@ -11,6 +11,20 @@ import { Button } from "@/components/ui/button"
 
 const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
   // 수정 모드인지 여부를 관리하는 상태를 정의합니다.
+  const [backgroundColor, setBackgroundColor] = useState(getRandomColor());
+
+  // 랜덤한 배경색을 반환하는 함수
+  function getRandomColor() {
+    const colors = ["#d4f3e7", "#f7d794", "#f3a683", "#fad390", "#dff9fb"];
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
+  }
+
+  // Todo 아이템의 배경색을 변경하는 함수
+  const changeBackgroundColor = () => {
+    setBackgroundColor(getRandomColor());
+  };
+
   const [isEditing, setIsEditing] = useState(false);
   // 수정할 내용을 저장하는 상태를 정의합니다.
   const [editText, setEditText] = useState(todo.text);
@@ -28,7 +42,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
 
   // 할 일 항목을 렌더링합니다.
   return (
-    <li className="bg-green-100 flex items-center justify-between py-2 px-4 border-b border-gray-200 shadow-md mb-1">
+    <li className={styles.todoItem} style={{ backgroundColor }}>
       {/* 체크박스를 렌더링하고, 체크박스의 상태를 할 일의 완료 상태와 동기화합니다. */}
       <input
         className="h-5 w-5 border-gray-300 rounded focus:ring-0 mr-4"
