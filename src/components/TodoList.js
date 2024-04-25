@@ -41,7 +41,7 @@ const TodoList = () => {
   const [category, setCategory] = useState("");
   const [filter, setFilter] = useState("");
   const [sorted, setSorted] = useState(false);
-  const [categoryFilter, setCategoryFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all");
 
   const filterTodos = () => {
     switch (filter) {
@@ -56,8 +56,8 @@ const TodoList = () => {
 
   const filteredTodos = filterTodos();
 
-  const toggleFilter = (ev) => {
-    setFilter(ev.target.value);
+  const toggleFilter = (value) => {
+    setFilter(value);
   };
 
   const toggleSort = () => {
@@ -68,8 +68,8 @@ const TodoList = () => {
   ? filteredTodos.slice().sort((a, b) => new Date(a.date) - new Date(b.date))
   : filteredTodos;
 
-  const handleCategoryFilter = (e) => {
-    setCategoryFilter(e.target.value);
+  const handleCategoryFilter = (value) => {
+    setCategoryFilter(value);
   };
 
   const filteredByCategoryTodos = categoryFilter === "all"
@@ -140,7 +140,7 @@ const TodoList = () => {
   return (
     <div className="max-w-[700px] mx-auto my-5 p-5 bg-white rounded-lg shadow-md">
       <h1 className="text-right text-gray-800">TODAY : {today}</h1>
-      <h1 className="text-5xl font-bold text-green-800 shadow-x1 mt-1 mb-8">Todo List</h1>
+      <h1 className="text-5xl font-medium text-black shadow-x1 mt-1 mb-8">Todo List</h1>
       {/* 할 일을 입력받는 텍스트 필드입니다. */}
       <div className="flex w-full items-center space-x-4 mt-4 mb-8">
       <Input
@@ -180,24 +180,34 @@ const TodoList = () => {
   Delete all
 </Button> 
       </div>
-      <button onClick={toggleSort}>
+      <Button className="w-28 mr-2" onClick={toggleSort}>
         {sorted ? "Unsort" : "Sort by Date"}
-      </button>
+      </Button>
       
-      <select value={filter} onChange={toggleFilter}>
-        <option value="all">all</option>
-        <option value="completed">Completed</option>
-        <option value="uncompleted">Uncompleted</option>
-      </select>
+      <Select value={filter} onValueChange={toggleFilter}>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="All" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All</SelectItem>
+          <SelectItem value="completed">Completed</SelectItem>
+          <SelectItem value="uncompleted">Uncompleted</SelectItem>
+       </SelectContent>
+      </Select>
 
-      <select value={categoryFilter} onChange={handleCategoryFilter}>
-        <option value="all">All Categories</option>
-        {categoryList.map((category) => (
-          <option key={category} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
+      <Select value={categoryFilter} onValueChange={handleCategoryFilter}>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="All Categories" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All Categories</SelectItem>
+          {categoryList.map((category) => (
+            <SelectItem key={category} value={category}>
+              {category}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       {/* 할 일 목록을 렌더링합니다. */}
       <ul>

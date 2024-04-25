@@ -8,6 +8,8 @@ import React, {useState} from "react";
 
 import { Button } from "@/components/ui/button"
 
+const categoryList = ["Study", "Exercise", "Work", "Other"];
+
 const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
   // 수정 모드인지 여부를 관리하는 상태를 정의합니다.
   const [backgroundColor, setBackgroundColor] = useState(getRandomColor());
@@ -62,12 +64,17 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
           value={editText}
           onChange={(e) => setEditText(e.target.value)}
         />
-        <input
+        <select
           className="w-1/4 p-1 mr-3 flex-grow border-2 border-gray-300 rounded-md"
-          type="text"
           value={editCategory}
           onChange={(t) => setEditCategory(t.target.value)}
-        />
+          >
+          {categoryList.map((cate) => (
+            <option key={cate} value={cate}>
+              {cate}
+            </option>
+          ))}
+        </select>
         <input
           className="w-1/3 p-1 mr-3 flex-grow border-2 border-gray-300 rounded-md"
           type="date"
