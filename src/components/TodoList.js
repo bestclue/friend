@@ -176,10 +176,9 @@ const TodoList = () => {
       <Button className="btn" onClick={addTodo}>
         Add Todo
       </Button>
-      <Button className="btn" onClick={deleteAll}>
-  Delete all
-</Button> 
+      
       </div>
+      <div className="flex justify-between w-full items-center space-x-4 mb-4">
       <Button className="w-28 mr-2" onClick={toggleSort}>
         {sorted ? "Unsort" : "Sort by Date"}
       </Button>
@@ -208,6 +207,11 @@ const TodoList = () => {
           ))}
         </SelectContent>
       </Select>
+
+      <Button className="btn" onClick={deleteAll}>
+        Delete all
+      </Button> 
+      </div>
 
       {/* 할 일 목록을 렌더링합니다. */}
       <ul>
