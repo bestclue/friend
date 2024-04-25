@@ -39,6 +39,42 @@ const TodoList = () => {
   const [input, setInput] = useState("");
   const [date, setDate] = useState("");
   const [category, setCategory] = useState("");
+  const [filter, setFilter] = useState("");
+  const [sorted, setSorted] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState("");
+
+  const filterTodos = () => {
+    switch (filter) {
+      case "completed":
+        return todos.filter((todo) => todo.completed);
+      case "uncompleted":
+        return todos.filter((todo) => !todo.completed);
+      default:
+        return todos;
+    }
+  };
+
+  const filteredTodos = filterTodos();
+
+  const toggleFilter = (ev) => {
+    setFilter(ev.target.value);
+  };
+
+  const toggleSort = () => {
+    setSorted(!sorted);
+  };
+
+  const sortedAndFilteredTodos = sorted
+  ? filteredTodos.slice().sort((a, b) => new Date(a.date) - new Date(b.date))
+  : filteredTodos;
+
+  const handleCategoryFilter = (e) => {
+    setCategoryFilter(e.target.value);
+  };
+
+  const filteredByCategoryTodos = categoryFilter === "all"
+  ? sortedAndFilteredTodos
+  : sortedAndFilteredTodos.filter((todo) => todo.category === categoryFilter);
 
   // addTodo 함수는 입력값을 이용하여 새로운 할 일을 목록에 추가하는 함수입니다.
   const addTodo = () => {
@@ -136,8 +172,6 @@ const TodoList = () => {
       />
 
 
-    
-
       {/* 할 일을 추가하는 버튼입니다. */}
       <Button className="btn" onClick={addTodo}>
         Add Todo
@@ -146,9 +180,28 @@ const TodoList = () => {
   Delete all
 </Button> 
       </div>
+      <button onClick={toggleSort}>
+        {sorted ? "Unsort" : "Sort by Date"}
+      </button>
+      
+      <select value={filter} onChange={toggleFilter}>
+        <option value="all">all</option>
+        <option value="completed">Completed</option>
+        <option value="uncompleted">Uncompleted</option>
+      </select>
+
+      <select value={categoryFilter} onChange={handleCategoryFilter}>
+        <option value="all">All Categories</option>
+        {categoryList.map((category) => (
+          <option key={category} value={category}>
+            {category}
+          </option>
+        ))}
+      </select>
+
       {/* 할 일 목록을 렌더링합니다. */}
       <ul>
-        {todos.map((todo) => (
+        {filteredByCategoryTodos.map((todo) => (
           <TodoItem
             key={todo.id}
             todo={todo}
